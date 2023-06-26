@@ -14,6 +14,7 @@ pip install langchain
 pip install PyPDF2
 pip install faiss-cpu
 pip install streamlit
+pip install tiktoken
 ```
 
 Next, you'll need to have your OpenAI API Key available. This can be either an environment variable `OPENAI_API_KEY` or 

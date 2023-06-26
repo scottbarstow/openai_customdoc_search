@@ -3,13 +3,13 @@ from langchain import OpenAI
 from PyPDF2 import PdfReader
 from langchain.embeddings.openai import OpenAIEmbeddings
 from langchain.text_splitter import CharacterTextSplitter
-from langchain.vectorstores import ElasticVectorSearch, Pinecone, Weaviate, FAISS
+from langchain.vectorstores import FAISS
 from openai_utils import get_openai_api_key
 from langchain.chains.question_answering import load_qa_chain
 from langchain.llms import OpenAI
 
-st.markdown("# PDF Search Engine")
-st.sidebar.markdown("# Upload PDF")
+st.markdown("# PL DocuBot")
+st.sidebar.markdown("# Upload a Document")
 
 def get_raw_text(reader):
     raw_text = ''
