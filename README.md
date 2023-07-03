@@ -13,6 +13,7 @@ pip install openai
 pip install langchain
 pip install PyPDF2
 pip install faiss-cpu
+pip install chromadb
 pip install streamlit
 pip install tiktoken
 ```
@@ -23,11 +24,11 @@ it will look for the key in a file in your home directory called `openai-api-key
 ### Running the Streamlit app
 
 ```
-streamlit run site.py
+streamlit run src/site.py
 ```
 
 ### Running the console app
 Note that you'll need to update the document name and the query with your specific info
 ```
-python main.py
+python src/main.py
 ```
