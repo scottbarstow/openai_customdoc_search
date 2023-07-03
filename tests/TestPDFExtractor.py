@@ -1,6 +1,6 @@
 import unittest
-from src.pdfbotsearch.components.PDFExtractor import PDFExtractor
-from src.pdfbotsearch.components.PDFExtractorEnum import PDFExtractorEnum
+from pdfbotsearch.components.PDFExtractor import PDFExtractor
+from pdfbotsearch.components.PDFExtractorEnum import PDFExtractorEnum
 
 class TestPDFExtractor(unittest.TestCase):
     def test_extract_docs_from_PDF_with_PyPDFLoader(self):
