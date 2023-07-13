@@ -17,7 +17,6 @@ from langchain.chat_models import ChatOpenAI
 st.markdown("# The PDF DocuBot")
 st.sidebar.markdown("# Upload a Document")
 openai_api_key = get_openai_api_key()
-print("open ai key " + openai_api_key)
 # Create the Vectorstore
 pdfVectorStore = PDFVectorStore(openai_api_key=openai_api_key,store_type=PDFVectorStoreEnum.Chroma)
 
