@@ -15,14 +15,18 @@ from components.PDFExtractorEnum import PDFExtractorEnum
 from langchain.chains import RetrievalQA
 from langchain.chat_models import ChatOpenAI
 
-
 st.markdown("# The PDF DocuBot")
 st.sidebar.markdown("# Upload a Document")
 openai_api_key = get_openai_api_key()
 
-# Use the PDFVectorStoreEnum value to initialize your PDFVectorStore object
-pdfVectorStore = PDFVectorStore(openai_api_key=openai_api_key)
 
+state = st.session_state
+if not hasattr(state, "pdfs"):
+    state.pdfs = {}
+if not hasattr(state, "vector_store"):
+    # Use the PDFVectorStoreEnum value to initialize your PDFVectorStore object
+    pdfVectorStore = PDFVectorStore(openai_api_key=openai_api_key)
+    state.vector_store = pdfVectorStore
 
 def generate_response(query, vector_store):
     # Creates the Chain
@@ -31,7 +35,7 @@ def generate_response(query, vector_store):
     qa_stuff = RetrievalQA.from_chain_type(
         llm=llm, 
         chain_type="stuff", # map_reduce, refine, map_rerank are other options
-        retriever=pdfVectorStore.get_retriever(), 
+        retriever=vector_store.get_retriever(), 
         verbose=True
     )
 
@@ -49,19 +53,22 @@ if uploaded_file is not None:
 
     #file_path = '/home/jean/AI/courses/prompt_engineering/ai-sandbox-pdf/1706.03762.pdf'
     #file_path = 'https://arxiv.org/pdf/1706.03762.pdf'
-    # load the PDF file and extract it to docs
-    docs = PDFExtractor.extract_docs_from_PDF(uploaded_file, PDFExtractorEnum.PdfReader)
-    st.info("extracted PDF to OpenAI docs " + str(len(docs)))
-    # Add new docs to the Vectorstore
-    pdfVectorStore.populate_db(docs)
-    st.info("populated Docs to Vector Store DB")
+    # load the PDF file and extract it to docs if not found in session state
+    if not state.pdfs.get(uploaded_file.name):
+        docs = PDFExtractor.extract_docs_from_PDF(uploaded_file, PDFExtractorEnum.PdfReader)
+        st.info("extracted PDF " + uploaded_file.name + " to OpenAI docs " + str(len(docs)))
+        # Add new docs to the Vectorstore
+        state.vector_store.populate_db(docs)
+        st.info("populated Docs to Vector Store DB")
+        state.pdfs[uploaded_file.name] = docs
+        # state.vector_store = pdfVectorStore 
     
     with st.form('my_form'):
-        text = st.text_area('Prompt:', '', placeholder='Ask LakeBot anything about HPPO')
+        text = st.text_area('Prompt:', '', placeholder='Who are the main authors of the paper ?')
         submit = st.form_submit_button('Go')
 
-        if submit:
-            generate_response(text, pdfVectorStore)
+        if submit:        
+            generate_response(text, state.vector_store)
 
 
 
