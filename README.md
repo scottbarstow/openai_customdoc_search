@@ -23,6 +23,12 @@ pip install tiktoken
 Next, you'll need to have your OpenAI API Key available. This can be either an environment variable `OPENAI_API_KEY` or 
 it will look for the key in a file in your home directory called `openai-api-key.txt`
 
+### Configuring the Streamlit app
+```
+cp .streamlit/config.toml.example .streamlit/config.toml
+```
+Then make changes to your local copy
+
 ### Running the Streamlit app
 
 ```
