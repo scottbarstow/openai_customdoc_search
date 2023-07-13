@@ -4,7 +4,9 @@ This project uses OpenAI, Langchain and Streamlit to demonstrate a
 working website where you can upload PDFs, have the vectors populated, and
 then do a semantic search of the contents.
 
-It uses the FAISS in-memory data store for vector storage
+It uses different data stores for vector storage depending on configuration.
+
+Requires Python 3.10 or later
 
 ## To run the demo
 
