@@ -1,3 +1,3 @@
 import streamlit as st
 
-st.markdown("# PL DocuBot")
+st.markdown("# PDF Bot Search")

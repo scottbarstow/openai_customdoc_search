@@ -14,16 +14,17 @@ from components.PDFExtractorEnum import PDFExtractorEnum
 from langchain.chains import RetrievalQA
 from langchain.chat_models import ChatOpenAI
 
-st.markdown("# PL DocuBot")
+st.markdown("# The PDF DocuBot")
 st.sidebar.markdown("# Upload a Document")
 openai_api_key = get_openai_api_key()
+print("open ai key " + openai_api_key)
 # Create the Vectorstore
 pdfVectorStore = PDFVectorStore(openai_api_key=openai_api_key,store_type=PDFVectorStoreEnum.Chroma)
 
 
 def generate_response(query, vector_store):
     # Creates the Chain
-    llm = ChatOpenAI(temperature = 0.0)
+    llm = ChatOpenAI(temperature = 0.0, openai_api_key=openai_api_key)
     # use either stuff, map_reduce or refine as chain type to experiment with different approaches
     qa_stuff = RetrievalQA.from_chain_type(
         llm=llm, 
