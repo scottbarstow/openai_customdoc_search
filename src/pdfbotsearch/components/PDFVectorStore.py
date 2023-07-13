@@ -13,7 +13,7 @@ class PDFVectorStore:
     embeddings = None
     db = None
 
-    def __init__(self, openai_api_key=None, store_type=None):
+    def __init__(self, openai_api_key, store_type=None):
         # Create OpenAI Embeddings
         self.embeddings = OpenAIEmbeddings(openai_api_key=openai_api_key)
 
