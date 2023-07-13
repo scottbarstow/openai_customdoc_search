@@ -26,6 +26,7 @@ it will look for the key in a file in your home directory called `openai-api-key
 ### Configuring the Streamlit app
 ```
 cp .streamlit/config.toml.example .streamlit/config.toml
+cp config.ini.example config.ini
 ```
 Then make changes to your local copy
 

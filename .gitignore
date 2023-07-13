@@ -164,3 +164,4 @@ cython_debug/
 
 # Streamlit Config
 .streamlit/config.toml
+config.ini
