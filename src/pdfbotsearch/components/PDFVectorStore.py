@@ -1,3 +1,4 @@
+from config_reader import ConfigReader
 from langchain.vectorstores import DocArrayInMemorySearch
 from langchain.vectorstores import FAISS
 from langchain.vectorstores import Chroma
@@ -12,9 +13,15 @@ class PDFVectorStore:
     embeddings = None
     db = None
 
-    def __init__(self, openai_api_key, store_type):
+    def __init__(self, openai_api_key=None, store_type=None):
         # Create OpenAI Embeddings
         self.embeddings = OpenAIEmbeddings(openai_api_key=openai_api_key)
+
+        if (store_type is None):
+            # get it from config
+            config = ConfigReader()
+            storage_type_str = config.get_value('vector_storage','store_type')
+            store_type = PDFVectorStoreEnum(storage_type_str)
 
         match store_type:
             case PDFVectorStoreEnum.FAISS:
@@ -26,7 +33,7 @@ class PDFVectorStore:
                     text_embedding_pairs,               
                     self.embeddings
                 )   
-                logging.info("created the " + PDFVectorStoreEnum.FAISS + " Vectorstore ")
+                logging.info("created the " + str(PDFVectorStoreEnum.FAISS) + " Vectorstore ")
             case PDFVectorStoreEnum.Chroma:
                 raw_text = ''
                 
@@ -40,12 +47,13 @@ class PDFVectorStore:
                 self.db = Chroma(
                     "chroma_db_storage",
                     self.embeddings
-                )   
+                )
+                logging.info("created the " + str(PDFVectorStoreEnum.Chroma) + " Vectorstore ")
             case _:
                 self.db= DocArrayInMemorySearch.from_params(
                     self.embeddings
                 )
-                logging.info("created the " + PDFVectorStoreEnum.InMemory + " Vectorstore ")
+                logging.info("created the " + str(PDFVectorStoreEnum.InMemory) + " Vectorstore ")
     
     def populate_db(self, docs):
         # Populate the database

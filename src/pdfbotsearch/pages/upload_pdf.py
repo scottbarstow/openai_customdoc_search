@@ -1,4 +1,5 @@
 import streamlit as st
+from config_reader import ConfigReader
 from langchain import OpenAI
 from PyPDF2 import PdfReader
 from langchain.embeddings.openai import OpenAIEmbeddings
@@ -14,11 +15,13 @@ from components.PDFExtractorEnum import PDFExtractorEnum
 from langchain.chains import RetrievalQA
 from langchain.chat_models import ChatOpenAI
 
+
 st.markdown("# The PDF DocuBot")
 st.sidebar.markdown("# Upload a Document")
 openai_api_key = get_openai_api_key()
-# Create the Vectorstore
-pdfVectorStore = PDFVectorStore(openai_api_key=openai_api_key,store_type=PDFVectorStoreEnum.Chroma)
+
+# Use the PDFVectorStoreEnum value to initialize your PDFVectorStore object
+pdfVectorStore = PDFVectorStore(openai_api_key=openai_api_key)
 
 
 def generate_response(query, vector_store):
