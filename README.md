@@ -26,14 +26,14 @@ it will look for the key in a file in your home directory called `openai-api-key
 ### Configuring the Streamlit app
 ```
 cp .streamlit/config.toml.example .streamlit/config.toml
-cp config.ini.example config.ini
+cp src/pdfbotsearch/config.ini.example src/pdfbotsearch/config.ini
 ```
 Then make changes to your local copy
 
 ### Running the Streamlit app
 
 ```
-streamlit run src/site.py
+streamlit run src/pdfbotsearch/site.py
 ```
 
 ### Running the console app
